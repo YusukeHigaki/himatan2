@@ -3,8 +3,106 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2c0295f7b959d7cc894ee1a78d4f3b41",
+    "hash": "951850aa9406f589fc378e2444ee01b8",
     "packages": [
+        {
+            "name": "amazonwebservices/aws-sdk-for-php",
+            "version": "1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amazonwebservices/aws-sdk-for-php.git",
+                "reference": "65d6bc82d6e0cd095709c342a23c749dc2f3a012"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amazonwebservices/aws-sdk-for-php/zipball/65d6bc82d6e0cd095709c342a23c749dc2f3a012",
+                "reference": "65d6bc82d6e0cd095709c342a23c749dc2f3a012",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "You should consider upgrading to version 2 of the AWS SDK for PHP"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "authentication/",
+                    "extensions/",
+                    "lib/",
+                    "services/",
+                    "utilities/",
+                    "sdk.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "AWS SDK for PHP",
+            "homepage": "http://aws.amazon.com/sdkforphp/",
+            "keywords": [
+                "amazon",
+                "aws",
+                "dynamodb",
+                "ec2",
+                "s3",
+                "sdk"
+            ],
+            "time": "2013-03-15 19:43:06"
+        },
+        {
+            "name": "cybernox/amazon-webservices-bundle",
+            "version": "1.5.6",
+            "target-dir": "Cybernox/AmazonWebServicesBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Cybernox/AmazonWebServicesBundle.git",
+                "reference": "fd721e092188707c9fa3902619331b0b77f15e1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Cybernox/AmazonWebServicesBundle/zipball/fd721e092188707c9fa3902619331b0b77f15e1e",
+                "reference": "fd721e092188707c9fa3902619331b0b77f15e1e",
+                "shasum": ""
+            },
+            "require": {
+                "amazonwebservices/aws-sdk-for-php": "*",
+                "symfony/framework-bundle": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Cybernox\\AmazonWebServicesBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Badolato",
+                    "email": "mbadolato@cybernox.com",
+                    "homepage": "http://www.markbadolato.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Symfony2 Bundle for interfacing with Amazon Web Services (AWS)",
+            "keywords": [
+                "amazon",
+                "aws",
+                "web services"
+            ],
+            "time": "2013-06-12 09:46:21"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.1.2",
@@ -1174,21 +1272,20 @@
         },
         {
             "name": "symfony/icu",
-            "version": "v1.2.1",
+            "version": "v1.0.1",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "98e197da54df1f966dd5e8a4992135703569c987"
+                "reference": "fdba214b1e087c149843bde976263c53ac10c975"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/98e197da54df1f966dd5e8a4992135703569c987",
-                "reference": "98e197da54df1f966dd5e8a4992135703569c987",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/fdba214b1e087c149843bde976263c53ac10c975",
+                "reference": "fdba214b1e087c149843bde976263c53ac10c975",
                 "shasum": ""
             },
             "require": {
-                "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
             },
@@ -1218,7 +1315,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-10-04 10:06:38"
+            "time": "2013-10-04 09:12:07"
         },
         {
             "name": "symfony/monolog-bundle",

@@ -13,3 +13,13 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+  Amazon Web Services Configuration. Found in the AWS Security Credentials.
+    aws_key                        = YOUR_KEY
+    aws_secret                     = YOUR_SECRET_KEY
+    aws_account_id                 = YOUR_ACCOUNT_ID
+    aws_canonical_id               = YOUR_CONONICAL_ID
+    aws_canonical_name             = YOUR_CONONICAL_NAME
+    aws_mfa_serial                 = YOUR_MFA_SERIAL
+    aws_cloudfront_keypair         = YOUR_CLOUDFRONT_KEYPAIR_ID
+    aws_cloudfront_pem             = YOUR_CLOUDFRONT_PRIVATE_KEY_PEM

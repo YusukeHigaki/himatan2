@@ -1,0 +1,11 @@
+{
+{% if status is defined %}
+    "status": "{{ status }}",
+    {% if status == 'error' %}
+        "errorMessage": "{{ errorMessage }}",
+    {% endif %}
+{% else %}
+    "status": "success",
+{% endif %}
+"code": {% block content %}{% endblock content %}
+}

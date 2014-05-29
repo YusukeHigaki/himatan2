@@ -1,0 +1,26 @@
+{% extends 'YusukeHimatanBundle:Api:baseApi.json.twig' %}
+{% block content %}
+    "id": {{ User.id }},
+    "name": "{{ User.name }}",
+    "sex": "{{ User.sex }}",
+    "age": "{{ User.age }}",
+    {% for UserImg in UserImgs %}
+            {% if UserImg.number == 1 %}
+            "img1": "{{ UserImg.img }}"
+            {% endif %}
+
+            {% if UserImg.number == 2 %}
+            "img2": "{{ UserImg.img }}",
+            {% endif %}
+
+            {% if UserImg.number == 3 %}
+            "img3": "{{ UserImg.img }}",
+            {% endif %}
+
+            {% if UserImg.number == 4 %}
+            "img4": "{{ UserImg.img }}",
+            {% endif %}
+    {% endfor %}
+    "introduction": "{{ User.introduction }}",
+    "like": "{{ UserLike }}",
+{% endblock %}
