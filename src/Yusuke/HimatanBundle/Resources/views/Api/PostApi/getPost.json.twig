@@ -6,7 +6,7 @@
         {% for Post in Posts %}
             {
             "id": {{ Post.id }},
-            "text": "{{ Post.text }}",
+            "text": "{{ Post.text | json_encode}}",
             "updatedAt": {{ Post.updatedAt.getTimestamp() }},
             "AreaId": {{ Post.area }},
             {% if Post.user.img.img is defined %}
