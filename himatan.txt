@@ -1,0 +1,203 @@
+-- MySQL dump 10.13  Distrib 5.6.16, for osx10.6 (x86_64)
+--
+-- Host: localhost    Database: himatan
+-- ------------------------------------------------------
+-- Server version	5.6.16
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `like`
+--
+
+DROP TABLE IF EXISTS `like`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `like` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `from` int(11) unsigned NOT NULL,
+  `to` int(11) unsigned NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `delete_flag` int(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `like_from_fk` (`from`),
+  KEY `like_to_fk` (`to`),
+  CONSTRAINT `like_from_fk` FOREIGN KEY (`from`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `like_to_fk` FOREIGN KEY (`to`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `like`
+--
+
+LOCK TABLES `like` WRITE;
+/*!40000 ALTER TABLE `like` DISABLE KEYS */;
+INSERT INTO `like` VALUES (1,2,1,'2014-05-20 16:09:23','2014-05-20 16:09:23',0),(2,2,1,'2014-05-20 16:10:19','2014-05-20 16:10:19',0),(3,9,11,'2014-05-20 17:06:22','2014-05-20 17:06:22',0),(4,9,11,'2014-05-20 17:07:40','2014-05-20 17:07:40',0);
+/*!40000 ALTER TABLE `like` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `from` int(11) unsigned NOT NULL,
+  `to` int(11) unsigned NOT NULL,
+  `text` varchar(500) NOT NULL,
+  `type` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `delete_flag` int(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `message_to_idx` (`to`),
+  KEY `message_from_idx` (`from`),
+  CONSTRAINT `message_from_fk` FOREIGN KEY (`from`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `message_to_fk` FOREIGN KEY (`to`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message`
+--
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (1,1,3,'thisismessagetext',1,'2014-05-19 18:38:10','2014-05-19 18:38:10',0),(2,1,3,'thisismessagetext',1,'2014-05-19 18:46:50','2014-05-19 18:46:50',0),(3,1,2,'thisistext',1,'2014-05-20 14:01:23','2014-05-20 14:01:23',0),(4,1,2,'s3/himatan/dev/message/1400562750983658_7488.jpg',2,'2014-05-20 14:12:31','2014-05-20 14:12:31',0),(5,1,2,'https://s3-ap-northeast-1.amazonaws.com/dzb-jp/s3/himatan/dev/message/1400562868743922_5935.jpg',2,'2014-05-20 14:14:29','2014-05-20 14:14:29',0),(6,9,11,'thisistext',1,'2014-05-20 17:10:08','2014-05-20 17:10:08',0),(7,9,11,'https://s3-ap-northeast-1.amazonaws.com/dzb-jp/s3/himatan/dev/message/1400573462266235_6538.jpg',2,'2014-05-20 17:11:02','2014-05-20 17:11:02',0),(8,9,11,'https://s3-ap-northeast-1.amazonaws.com/dzb-jp/s3/himatan/dev/message/140057376961461_3443.jpg',2,'2014-05-20 17:16:09','2014-05-20 17:16:09',0);
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `post`
+--
+
+DROP TABLE IF EXISTS `post`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `post` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `area_id1` int(11) unsigned NOT NULL,
+  `area_id2` int(11) unsigned DEFAULT NULL,
+  `area_id3` int(11) unsigned DEFAULT NULL,
+  `text` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `delete_flag` int(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `post_user_id_fk` (`user_id`),
+  KEY `post_area_id1_fk` (`area_id1`),
+  KEY `post_area_id2_fk` (`area_id2`),
+  KEY `post_area_id3_fk` (`area_id3`),
+  KEY `post_created_at_idx` (`created_at`),
+  CONSTRAINT `post_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `post`
+--
+
+LOCK TABLES `post` WRITE;
+/*!40000 ALTER TABLE `post` DISABLE KEYS */;
+INSERT INTO `post` VALUES (1,1,1,3,0,'thisispostcontent','2014-05-19 14:01:07','2014-05-19 14:01:07',0),(2,1,0,0,0,'thisispost2','2014-05-19 15:45:08','2014-05-19 15:45:08',0),(3,1,0,0,0,'thisispost3','2014-05-19 15:45:20','2014-05-19 15:45:20',0),(4,1,0,0,0,'thisispost4','2014-05-19 15:45:29','2014-05-19 15:45:29',0),(5,1,0,0,0,'thisispost5','2014-05-19 15:45:39','2014-05-19 15:45:39',0),(6,1,0,0,0,'thisispost6','2014-05-19 15:45:47','2014-05-19 15:45:47',0),(7,1,0,0,0,'thisispost7','2014-05-19 15:45:55','2014-05-19 15:45:55',0),(8,1,0,0,0,'thisispost8','2014-05-19 15:46:03','2014-05-19 15:46:03',0),(9,1,0,0,0,'thisispost9','2014-05-19 15:46:11','2014-05-19 15:46:11',0),(10,1,0,0,0,'thisispost10','2014-05-19 15:46:18','2014-05-19 15:46:18',0),(11,1,12,11,14,'thisispost11','2014-05-19 15:50:02','2014-05-19 15:50:02',0),(12,3,4,2,5,'thisistext','2014-05-20 17:19:53','2014-05-20 17:19:53',0),(13,3,4,0,0,'thisistext','2014-05-20 17:20:12','2014-05-20 17:20:12',0);
+/*!40000 ALTER TABLE `post` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `report`
+--
+
+DROP TABLE IF EXISTS `report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `report` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `from` int(11) unsigned NOT NULL,
+  `to` int(11) unsigned NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `delete_flag` int(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `report_from_fk` (`from`),
+  KEY `report_to_fk` (`to`),
+  CONSTRAINT `report_from_fk` FOREIGN KEY (`from`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `report_to_fk` FOREIGN KEY (`to`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `report`
+--
+
+LOCK TABLES `report` WRITE;
+/*!40000 ALTER TABLE `report` DISABLE KEYS */;
+INSERT INTO `report` VALUES (1,2,1,'2014-05-20 16:20:47','2014-05-20 16:20:47',0),(2,2,1,'2014-05-20 16:21:33','2014-05-20 16:21:33',0),(3,2,1,'2014-05-20 16:41:06','2014-05-20 16:41:06',0),(4,2,1,'2014-05-20 16:41:19','2014-05-20 16:41:19',0),(5,2,1,'2014-05-20 16:41:52','2014-05-20 16:41:52',0),(6,3,2,'2014-05-20 16:44:24','2014-05-20 16:44:24',0),(7,3,2,'2014-05-20 16:44:33','2014-05-20 16:44:33',0),(8,6,3,'2014-05-20 16:49:40','2014-05-20 16:49:40',0),(9,6,3,'2014-05-20 16:49:42','2014-05-20 16:49:42',0),(10,6,4,'2014-05-20 16:52:37','2014-05-20 16:52:37',0),(11,6,4,'2014-05-20 16:52:45','2014-05-20 16:52:45',0),(12,6,4,'2014-05-20 16:53:28','2014-05-20 16:53:28',0),(13,6,4,'2014-05-20 16:53:33','2014-05-20 16:53:33',0),(14,6,4,'2014-05-20 16:55:09','2014-05-20 16:55:09',0),(15,6,16,'2014-05-20 16:55:45','2014-05-20 16:55:45',0),(16,6,16,'2014-05-20 16:56:06','2014-05-20 16:56:06',0),(17,6,16,'2014-05-20 16:56:10','2014-05-20 16:56:10',0),(18,6,16,'2014-05-20 16:56:16','2014-05-20 16:56:16',0),(19,6,16,'2014-05-20 16:56:32','2014-05-20 16:56:32',0),(20,6,15,'2014-05-20 16:57:38','2014-05-20 16:57:38',0),(21,6,15,'2014-05-20 16:57:45','2014-05-20 16:57:45',0),(22,11,10,'2014-05-20 17:04:20','2014-05-20 17:04:20',0),(23,11,10,'2014-05-20 17:04:27','2014-05-20 17:04:27',0);
+/*!40000 ALTER TABLE `report` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT '',
+  `sex` tinyint(1) unsigned DEFAULT NULL,
+  `age` tinyint(2) unsigned DEFAULT NULL,
+  `area_id` int(11) unsigned DEFAULT NULL,
+  `pic1` varchar(255) DEFAULT '',
+  `pic2` varchar(255) DEFAULT NULL,
+  `pic3` varchar(255) DEFAULT NULL,
+  `pic4` varchar(255) DEFAULT NULL,
+  `introduction` varchar(100) DEFAULT '',
+  `device` tinyint(11) unsigned NOT NULL,
+  `version` int(11) unsigned NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `cnt_heart` int(11) unsigned DEFAULT '0',
+  `cnt_report` int(11) unsigned DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `delete_flag` int(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `user_area_id_fk` (`area_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'yusuke',1,25,4,'1400483999499367_2889.jpg','1400484000133982_7733.jpg','1400484000307690_5482.jpg','1400484000442249_4564.jpg','thisisintroduction',9,9,'thisistoken5',2,4,'2014-05-15 08:48:19','2014-05-22 09:33:16',1),(2,'HIGAKI',0,25,1,NULL,NULL,NULL,NULL,'I am a man',0,0,'thisistoken',0,2,'2014-05-15 09:04:10','2014-05-20 16:44:33',1),(3,'yusuke',1,25,1,'53783a11a47ee.jpeg',NULL,NULL,NULL,'My name is yusuke',0,0,'thisistoken',0,2,'2014-05-15 09:32:30','2014-05-20 16:49:42',1),(4,'yusuke',1,25,1,'537855c49d0dc.jpeg','537855c49db58.jpeg','537855c49e0c6.jpeg','537855c49e298.png','My name is yusuke',0,0,'thatistoken',0,3,'2014-05-15 09:35:43','2014-05-20 16:55:10',1),(5,'yusuke',1,25,1,'1400422620719239_2396.jpg','1400422621475561_9477.jpg','1400422621816060_3659.jpg','140042262287010_3168.jpg','My name is yusuke',0,0,'thisistoken',0,0,'2014-05-15 09:37:43','2014-05-23 16:40:24',1),(6,'yusuke',1,25,1,'1400425121274555_5676.jpg','140042512243620_3921.jpg','1400425122297608_8475.jpg','1400425122476961_5342.jpg','My name is yusuke',0,0,'thisistoken',0,0,'2014-05-15 09:55:54','2014-05-23 16:41:55',1),(7,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',0,0,'thisistoken',0,0,'2014-05-15 13:47:33','2014-05-23 16:43:32',1),(8,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',0,0,'thisistoken',0,0,'2014-05-15 13:51:59','2014-05-15 13:51:59',0),(9,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',0,0,'thisistoken',0,0,'2014-05-15 13:55:01','2014-05-15 13:55:01',0),(10,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',0,0,'thisistoken',0,2,'2014-05-15 14:02:29','2014-05-20 17:04:27',1),(11,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',0,0,'thisistoken',2,0,'2014-05-15 14:03:18','2014-05-20 17:07:40',0),(12,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',1,1,'\"thisistoken\"',0,0,'2014-05-15 15:37:17','2014-05-15 15:37:17',0),(13,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',1,1,'\"thisistoken\"',0,0,'2014-05-15 15:37:18','2014-05-15 15:37:18',0),(14,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',1,1,'\"thisistoken\"',0,0,'2014-05-15 15:37:36','2014-05-15 15:37:36',1),(15,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',0,1,'\"thisistoken\"',0,2,'2014-05-15 15:49:41','2014-05-20 16:57:45',1),(16,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',0,1,'\"thisistoken\"',0,5,'2014-05-15 15:50:22','2014-05-20 16:56:32',1),(17,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',1,1,'',0,0,'2014-05-20 17:29:26','2014-05-20 17:29:26',0),(18,'kyosuke',0,33,0,'1400574839796951_8923.jpg','1400574840422668_1735.jpg','1400574840596232_3213.jpg','1400574840747284_5283.jpg','heyheyhey',1,1,'thatistokens',0,0,'2014-05-20 17:29:44','2014-05-20 17:34:00',0);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-05-31 20:07:44
