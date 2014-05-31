@@ -13,13 +13,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UserImg
 {
+
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      * @Assert\NotBlank(groups={"file_upload_service"})
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
@@ -70,29 +74,6 @@ class UserImg
     private $id;
 
 
-
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     * @return UserImg
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer 
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
 
     /**
      * Set img
@@ -217,5 +198,28 @@ class UserImg
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Yusuke\HimatanBundle\Entity\User $user
+     * @return UserImg
+     */
+    public function setUser(\Yusuke\HimatanBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Yusuke\HimatanBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

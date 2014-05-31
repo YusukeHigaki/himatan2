@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserPostRepository extends EntityRepository
 {
+    public function setPost($post)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($post);
+        $em->flush();
+        return $post;
+    }
 }

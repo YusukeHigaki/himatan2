@@ -15,11 +15,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 class UserArea
 {
     /**
-     * @var integer
+     * @var /UserPost
      *
-     * @ORM\Column(name="post_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="UserPost")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * })
      */
-    private $postId;
+    private $post;
 
     /**
      * @var integer
@@ -59,31 +62,6 @@ class UserArea
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-
-
-    /**
-     * Set postId
-     *
-     * @param integer $postId
-     * @return UserArea
-     */
-    public function setPostId($postId)
-    {
-        $this->postId = $postId;
-
-        return $this;
-    }
-
-    /**
-     * Get postId
-     *
-     * @return integer 
-     */
-    public function getPostId()
-    {
-        return $this->postId;
-    }
 
     /**
      * Set areaId
@@ -185,5 +163,28 @@ class UserArea
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get post
+     *
+     * @return /Post
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * Set post
+     *
+     * @param integer $post
+     * @return UserArea
+     */
+    public function setPost($post)
+    {
+        $this->post = $post;
+
+        return $this;
     }
 }

@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserMessageRepository extends EntityRepository
 {
+    public function setMessage($message)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($message);
+        $em->flush();
+    }
 }

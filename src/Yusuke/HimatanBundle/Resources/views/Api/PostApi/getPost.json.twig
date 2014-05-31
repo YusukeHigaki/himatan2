@@ -1,0 +1,21 @@
+{% extends 'YusukeHimatanBundle:Api:baseApi.json.twig' %}
+
+{% block content %}
+    {% if Posts is defined %}
+        "Posts": [
+        {% for Post in Posts %}
+            {
+            "id": {{ Post.id }},
+            "text": "{{ Post.text }}",
+            "updatedAt": {{ Post.updatedAt.getTimestamp() }},
+            "AreaId": {{ Post.area }},
+            {% if Post.user.img.img is defined %}
+            "img": {{ Post.user.img.img }},
+            {% endif %}
+            "name":"{{ Post.user.name }}"
+            {% if loop.last %}{% else %},{% endif %}
+            }
+        {% endfor %}
+        ]
+    {% endif %}
+{% endblock %}

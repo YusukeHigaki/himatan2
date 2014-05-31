@@ -107,6 +107,12 @@ class User
      */
     private $id;
 
+    /**
+     * @var /UserImg
+     *
+     * @ORM\OneToMany(targetEntity="UserImg", mappedBy="user")
+     */
+    private $img;
 
 
     /**
@@ -382,5 +388,23 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setImg($img)
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
+
+    /**
+     * Get img
+     *
+     * @return User
+     */
+    public function getImg()
+    {
+        return $this->img;
     }
 }

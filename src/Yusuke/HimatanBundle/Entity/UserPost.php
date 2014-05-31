@@ -16,16 +16,33 @@ class UserPost
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     * @Assert\NotBlank(groups={"set_post_api"})
+     * @Assert\Type(type="integer",groups={"set_post_api"})
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
      *
      * @ORM\Column(name="text", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(groups={"set_post_api"})
+     * @Assert\Type(type="string",groups={"set_post_api"})
      */
     private $text;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="area", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(groups={"set_post_api"})
+     * @Assert\Type(type="string",groups={"set_post_api"})
+     */
+    private $area;
+
 
     /**
      * @var \DateTime
@@ -59,30 +76,6 @@ class UserPost
      */
     private $id;
 
-
-
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     * @return UserPost
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer 
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
 
     /**
      * Set text
@@ -184,5 +177,51 @@ class UserPost
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param integer $user
+     * @return UserPost
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return integer 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set area
+     *
+     * @param string $area
+     * @return UserPost
+     */
+    public function setArea($area)
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * Get area
+     *
+     * @return string 
+     */
+    public function getArea()
+    {
+        return $this->area;
     }
 }

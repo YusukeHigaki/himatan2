@@ -29,5 +29,6 @@ class UserRepository extends EntityRepository
         $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
+        return $user;
     }
 }

@@ -24,6 +24,36 @@ use Yusuke\HimatanBundle\Controller\AppController;
  */
 class UserApiController extends AppController
 {
+    public function checkPostValue(Request $request, array $names)
+    {
+        foreach ($names as $name){
+            if (!$request->get($name)) throw new ClientErrorException('invalidPostValue');
+        }
+    }
+
+    public function getRequestUser(Request $request, $validateName, User $user = NULL)
+    {
+        if (!$user) $user = new User();
+        $user
+            ->setAreaId(((int)$request->get('areaId')) ?: $user->getAreaId())
+            ->setAge(((int)$request->get('age')) ?: $user->getAge())
+            ->setDevice(((int)$request->get('device')) ?: $user->getDevice())
+            ->setSex(((int)$request->get('sex')) ?: $user->getSex())
+            ->setName(($request->get('name')) ?: $user->getName())
+            ->setVersion(($request->get('version')) ?: $user->getVersion())
+            ->setIntroduction(($request->get('introduction')) ?: $user->getIntroduction())
+            ->setToken(($request->get('token')) ?: $user->getToken())
+        ;
+        $this->validate($user, $validateName);
+        return $user;
+    }
+
+    public function validate(User $user, $validateName)
+    {
+        $errors = $this->get('validator')->validate($user, $validateName);
+        if (count($errors) > 0) throw new ClientErrorException('invalidPostValue');
+    }
+
     /**
      * @Route("/setUser",defaults={"_format"="json"},name="api_user_setUser")
      * @Template
@@ -31,22 +61,11 @@ class UserApiController extends AppController
     public function setUserAction(Request $request)
     {
         $this->checkRestMethod($request);
+        $this->checkPostValue($request, array('device','version'));
+        $user = $this->getRequestUser($request, 'set_user_api');
 
-        if (!$device = (int)$request->get('device')) throw new ClientErrorException('invalidPostValue');
-        if (!$version = $request->get('version')) throw new ClientErrorException('invalidPostValue');
-
-        $user = new User();
-        $user
-            ->setDevice($device)
-            ->setVersion($version)
-            ->setToken($request->get('token'))
-            ;
-        $errors = $this->get('validator')->validate($user, array('set_user_api'));
-        if (count($errors) > 0) throw new ClientErrorException('invalidPostValue');
-
-        $em = $this->get('doctrine')->getEntityManager();
-        $em->persist($user);
-        $em->flush();
+        $userRepository = $this->get('doctrine')->getRepository('YusukeHimatanBundle:User');
+        $user = $userRepository->setUser($user);
 
         return array(
             'userId' => $user->getId(),
@@ -60,17 +79,16 @@ class UserApiController extends AppController
     public function getUserAction(Request $request)
     {
         $this->checkRestMethod($request);
-
-        if (!$id = (int)$request->get('id')) throw new ClientErrorException('invalidPostValue');
+        $this->checkPostValue($request, array('id'));
 
         $userRepository = $this->get('doctrine')->getRepository('YusukeHimatanBundle:User');
-        $user = $userRepository->selectUser($id);
+        $user = $userRepository->selectUser($request->get('id'));
 
         $userImgRepository = $this->get('doctrine')->getRepository('YusukeHimatanBundle:UserImg');
-        $userImgs = $userImgRepository->selectUserImg($id);
+        $userImgs = $userImgRepository->selectUserImg($request->get('id'));
 
         $userLikeRepository = $this->get('doctrine')->getRepository('YusukeHimatanBundle:UserLike');
-        $userLike = $userLikeRepository->selectUserLike($id);
+        $userLike = $userLikeRepository->selectUserLike($request->get('id'));
 
         return array(
             'User' => $user,
@@ -86,26 +104,13 @@ class UserApiController extends AppController
     public function updateUserAction(Request $request)
     {
         $this->checkRestMethod($request);
-
-        if (!$id = (int)$request->get('id')) throw new ClientErrorException('invalidPostValue');
-        if (!$sex= (int)$request->get('sex')) throw new ClientErrorException('invalidPostValue');
-        if (!$age = (int)$request->get('age')) throw new ClientErrorException('invalidPostValue');
-        if (!$areaId = (int)$request->get('areaId')) throw new ClientErrorException('invalidPostValue');
-        if (!$name = $request->get('name')) throw new ClientErrorException('invalidPostValue');
-        if (!$introduction = $request->get('introduction')) throw new ClientErrorException('invalidPostValue');
+        $this->checkPostValue($request, array('id','sex','age','areaId','name','introduction'));
 
         $userRepository = $this->get('doctrine')->getRepository('YusukeHimatanBundle:User');
-        $user = $userRepository->selectUser($id);
+        $user = $userRepository->selectUser($request->get('id'));
 
-        $user
-            ->setSex($sex)
-            ->setAge($age)
-            ->setAreaId($areaId)
-            ->setName($name)
-            ->setIntroduction($introduction)
-            ;
-        $errors = $this->get('validator')->validate($user, array('update_user_api'));
-        if (count($errors) > 0) throw new ClientErrorException('invalidPostValue8');
+        $this->getRequestUser($request, 'update_user', $user);
+
         $userRepository->setUser($user);
 
         $fileUploadService = $this->get('file_upload_service');

@@ -18,3 +18,8 @@ services:
             - @image_file_component
             - @s3_upload_service
             - @service_container
+
+    post_service:
+        class: Yusuke\HimatanBundle\Service\PostService
+        arguments:
+            - @doctrine.orm.entity_manager

@@ -46,6 +46,16 @@ class FileUploadService
         $this->updateUserImg($img->getFileName(), $number, $userId);
     }
 
+    public function uploadMessageImg($file)
+    {
+        $this->imageFile->set($file);
+        $img = $this->imageFile;
+        $dir = $this->container->getParameter('amazon_s3_dir').'message/';
+        $this->s3UploadService->upload($img, $dir);
+        $img->remove();
+        return $img->getFileName();
+    }
+
     public function validate($fileName, $number, $userId)
     {
         $userImg = new UserImg();

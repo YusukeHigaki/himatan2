@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserAreaRepository extends EntityRepository
 {
+    public function setArea($area)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($area);
+        $em->flush();
+    }
 }

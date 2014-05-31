@@ -21,4 +21,10 @@ class UserLikeRepository extends EntityRepository
         return count($userImg);
     }
 
+    public function setLike($like)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($like);
+        $em->flush();
+    }
 }

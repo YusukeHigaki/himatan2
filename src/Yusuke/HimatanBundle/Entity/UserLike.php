@@ -17,16 +17,20 @@ class UserLike
     /**
      * @var integer
      *
-     * @ORM\Column(name="from_user", type="integer", nullable=false)
+     * @ORM\Column(name="from_user_id", type="integer", nullable=false)
+     * @Assert\NotBlank(groups={"set_like_api"})
+     * @Assert\Type(type="integer",groups={"set_like_api"})
      */
-    private $fromUser;
+    private $fromUserId;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="to_user", type="integer", nullable=false)
+     * @ORM\Column(name="to_user_id", type="integer", nullable=false)
+     * @Assert\NotBlank(groups={"set_like_api"})
+     * @Assert\Type(type="integer",groups={"set_like_api"})
      */
-    private $toUser;
+    private $toUserId;
 
     /**
      * @var \DateTime
@@ -62,51 +66,6 @@ class UserLike
 
 
 
-    /**
-     * Set fromUser
-     *
-     * @param integer $fromUser
-     * @return UserLike
-     */
-    public function setFromUser($fromUser)
-    {
-        $this->fromUser = $fromUser;
-
-        return $this;
-    }
-
-    /**
-     * Get fromUser
-     *
-     * @return integer 
-     */
-    public function getFromUser()
-    {
-        return $this->fromUser;
-    }
-
-    /**
-     * Set toUser
-     *
-     * @param integer $toUser
-     * @return UserLike
-     */
-    public function setToUser($toUser)
-    {
-        $this->toUser = $toUser;
-
-        return $this;
-    }
-
-    /**
-     * Get toUser
-     *
-     * @return integer 
-     */
-    public function getToUser()
-    {
-        return $this->toUser;
-    }
 
     /**
      * Set createdAt
@@ -185,5 +144,51 @@ class UserLike
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set fromUserId
+     *
+     * @param integer $fromUserId
+     * @return UserLike
+     */
+    public function setFromUserId($fromUserId)
+    {
+        $this->fromUserId = $fromUserId;
+
+        return $this;
+    }
+
+    /**
+     * Get fromUserId
+     *
+     * @return integer 
+     */
+    public function getFromUserId()
+    {
+        return $this->fromUserId;
+    }
+
+    /**
+     * Set toUserId
+     *
+     * @param integer $toUserId
+     * @return UserLike
+     */
+    public function setToUserId($toUserId)
+    {
+        $this->toUserId = $toUserId;
+
+        return $this;
+    }
+
+    /**
+     * Get toUserId
+     *
+     * @return integer 
+     */
+    public function getToUserId()
+    {
+        return $this->toUserId;
     }
 }

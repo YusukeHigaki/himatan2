@@ -9,28 +9,29 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * UserMessage
  * @ORM\Entity(repositoryClass="Yusuke\HimatanBundle\Entity\Repository\UserMessageRepository")
- * @ORM\Table(name="user_message", indexes={@ORM\Index(name="message_to_user_idx", columns={"to_user"}), @ORM\Index(name="message_from_user_idx", columns={"from_user"})})
+ * @ORM\Table(name="user_message", indexes={@ORM\Index(name="message_to_user_idx", columns={"to_user_id"}), @ORM\Index(name="message_from_user_idx", columns={"from_user_id"})})
  */
 class UserMessage
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="from_user", type="integer", nullable=false)
+     * @var /User
+     * @ORM\Column(name="from_user_id", type="string", length=11, nullable=false)
+     * @Assert\NotBlank(groups={"set_message_api"})
      */
-    private $fromUser;
+    private $fromUserId;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="to_user", type="integer", nullable=false)
+     * @var /User
+     * @ORM\Column(name="to_user_id", type="string", length=11, nullable=false)
+     * @Assert\NotBlank(groups={"set_message_api"})
      */
-    private $toUser;
+    private $toUserId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="text", type="string", length=500, nullable=false)
+     * @ORM\Column(name="text", type="string", length=500, nullable=true)
+     * @Assert\Type(type="string",groups={"set_message_api"})
      */
     private $text;
 
@@ -74,53 +75,6 @@ class UserMessage
     private $id;
 
 
-
-    /**
-     * Set fromUser
-     *
-     * @param integer $fromUser
-     * @return UserMessage
-     */
-    public function setFromUser($fromUser)
-    {
-        $this->fromUser = $fromUser;
-
-        return $this;
-    }
-
-    /**
-     * Get fromUser
-     *
-     * @return integer 
-     */
-    public function getFromUser()
-    {
-        return $this->fromUser;
-    }
-
-    /**
-     * Set toUser
-     *
-     * @param integer $toUser
-     * @return UserMessage
-     */
-    public function setToUser($toUser)
-    {
-        $this->toUser = $toUser;
-
-        return $this;
-    }
-
-    /**
-     * Get toUser
-     *
-     * @return integer 
-     */
-    public function getToUser()
-    {
-        return $this->toUser;
-    }
-
     /**
      * Set text
      *
@@ -137,7 +91,7 @@ class UserMessage
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
@@ -160,7 +114,7 @@ class UserMessage
     /**
      * Get img
      *
-     * @return string 
+     * @return string
      */
     public function getImg()
     {
@@ -183,7 +137,7 @@ class UserMessage
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -206,7 +160,7 @@ class UserMessage
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -229,7 +183,7 @@ class UserMessage
     /**
      * Get deleteFlag
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeleteFlag()
     {
@@ -239,10 +193,56 @@ class UserMessage
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
+
+    /**
+     * Set fromUserId
+     *
+     * @return UserMessage
+     */
+    public function setFromUserId($fromUserId)
+    {
+        $this->fromUserId = $fromUserId;
+
+        return $this;
+    }
+
+    /**
+     * Get fromUserId
+     *
+     * @return integer
+     */
+    public function getFromUserId()
+    {
+        return $this->fromUserId;
+    }
+
+    /**
+     * Set toUserId
+     *
+     * @return UserMessage
+     */
+    public function setToUserId($toUserId)
+    {
+        $this->toUserId = $toUserId;
+
+        return $this;
+    }
+
+    /**
+     * Get toUserId
+     *
+     * @return integer
+     */
+    public function getToUserId()
+    {
+        return $this->toUserId;
+    }
+
+
 }
